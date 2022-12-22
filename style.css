@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&family=Kaushan+Script&display=swap');
+
+/* imported fonts */
+*{
+    font-family: 'Cabin', sans-serif !important;}
+    .quotesMain{
+        color: #443D25 !important;
+        font-family: 'Kaushan Script', cursive !important;
+    }
+    .quotesFollow{
+        color: #8F916B !important;
+        font-family: 'Kaushan Script', cursive !important;
+    }
+/* background colors */
+.bg-cream{
+    background-color: #f6eee0 !important;
+}
+.bg-beige{
+    background-color: #C38370 !important;
+}
+.bg-tan{
+    background-color: #a45c40 !important;
+}
+.bg-khaki{
+    background-color: #DBC4AF !important;
+}
+.bg-puce{
+    background-color: #443D25 !important;
+}
+.bg-sage{
+    background-color: #8f916b !important;
+}
+
+/* text colors */
+.text-cream{
+    color: #F6EEE0 !important;
+}
+.text-beige{
+    color: #C38370 !important;
+}
+.text-tan{
+    color: #A45C40 !important;
+}
+.text-khaki{
+    color: #DBC4AF !important;
+}
+.text-puce{
+    color: #443D25 !important;
+}
+.text-sage{
+    color: #8F916B !important;
+}
+body{
+    background-color: #F6EEE0;
+}
+.boxTest{
+    height: 5rem;
+    aspect-ratio: 1/1;
+    color: #F6EEE0;
+    border: 2px solid #C38370;
+}
+
+.title{
+    position: sticky; top: 0;
+    margin-bottom: 1px;
+    
+}
+.contentDivider{
+    margin: 200px;
+    border: .5px solid #A45C40;
+    background-color: #A45C40;
+}
+.content{
+    margin: 0 5px 0 5px;
+}
+.contentTopic{
+    font-size: 50px;
+    margin: 0;
+}
+.contentParagraph{
+    font-size: 30px;
+    margin: 0
+}
+.contentProp{
+    min-height: 20px;
+}
+
+#canvas{
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#canvas::-webkit-scrollbar {
+    display: none;
+}
+
+#reset-game{
+    
+}
