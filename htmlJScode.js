@@ -8,7 +8,7 @@
 // Control speed of the Game of Life. [accomplished]
 // Allow users to change the rules of survival. [accomplished]
 // Allow users to change the rules of reproduction. [accomplished]
-// Start/Stop the Game of life [accomplished]
+// Start/Stop the Game of life [accomplished] [done]
 // Multiple colors of life on the same board. [accomplished]
 // Darken colors for stable life. [doable]
 // Random initial states [doable]
@@ -16,7 +16,7 @@
 // Use Keyboard to control the cursor to place the life
 // Resize board on windows resize (Check out windowsResized)
 // Switching between different styles. [accomplished]
-// show iteration version [doable] add count at generate
+// show iteration version [doable] add count at generate [done]
 // Anything else that you could think of.
 // only if I have time
 // hover change color [doable] (opaciity) 
@@ -31,8 +31,7 @@ let currentBoard;
 let nextBoard;
 let gameWidth = document.querySelector('#canvas')
 let framePerSec = 10
-console.log("Game width =" + gameWidth.offsetWidth)
-
+let count = 0
 const boxColor = '#8f916b';
 const strokeColor = '#a45c40';
 const backgroundColor = '#F6EEE0';
@@ -78,11 +77,18 @@ function setup() {
 // draw() this will run many times. run once per frame.
 // if frame rate is 30, draw() will run 30 times per second.
 function draw() {
-frameRate(parseInt(document.querySelector('#userFrameRate').innerHTML))
-
-
+    frameRate(parseInt(document.querySelector('#userFrameRate').innerHTML))
     background(color(backgroundColor));
-    generate();
+
+    //pause game on active button
+    if (document.querySelector('[id=pauseBtn][aria-pressed*="true"]')) {
+        document.querySelector('#pauseBtnIndicator').innerHTML = "Paused"
+    } else {
+        document.querySelector('#pauseBtnIndicator').innerHTML = "running"
+        generate()
+
+        count++
+    }
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
             if (currentBoard[i][j] == 1) {
@@ -94,6 +100,7 @@ frameRate(parseInt(document.querySelector('#userFrameRate').innerHTML))
             rect(i * unitLength, j * unitLength, unitLength, unitLength);
         }
     }
+    document.querySelector('#iterationCount').innerHTML = count
 }
 
 function generate() {
