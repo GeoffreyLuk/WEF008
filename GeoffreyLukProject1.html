@@ -75,22 +75,30 @@
     <!-- Game -->
     <div class="container-lg">
         <div class="row text-center">
-        <div id="canvas" class="col-12">
+            <div id="canvas" class="col-12">
 
+            </div>
         </div>
     </div>
-    </div>
 
-    <input id="reset-game" class="btn btn-primary" type="reset" value="Reset">
-    <div>
-        <div>frame rate</div>
-    <div id="userFrameRate">10</div>
-</div>
-<div id="pauseBtn" class="btn btn-primary active" role="button" data-bs-toggle="button" aria-pressed="true">pause button</div>
-<div id="pauseBtnIndicator">No</div>
-<div>
-    <div>Current iteration count: </div><div id="iterationCount"></div>
-</div>
+    <div id="controlPanel" class="container-lg">
+        <input id="reset-game" class="btn btn-primary" type="reset" value="Reset">
+        <div class="row justify-content-start">
+            <div class="col-2">frame rate</div>
+            <div id="userFrameRate" class="col-2">10</div>
+        </div>
+        <div id="pauseBtn" class="btn btn-primary active" role="button" data-bs-toggle="button" aria-pressed="true">
+            pause button</div>
+        <div id="pauseBtnIndicator">No</div>
+        <div class="row justify-content-start">
+            <div class="col-4">Current iteration count: </div>
+            <div id="iterationCount" class="col-2"></div>
+        </div>
+        <div class="row justify-content-start">
+        <div id="userColor1" class="btn btn-primary active col-2 colorSelector" role="button" data-bs-toggle="button" aria-pressed="true">Color1</div>
+        <div id="userColor2" class="btn btn-primary col-2 colorSelector" role="button" data-bs-toggle="button" aria-pressed="false">Color2</div>
+    </div>
+    </div>
 
 
 
