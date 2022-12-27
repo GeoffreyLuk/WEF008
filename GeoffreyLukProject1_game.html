@@ -118,14 +118,15 @@
                         data-bs-toggle="button" aria-pressed="true">Native</div>
                     <div id="userColor2" class="btn btn-primary colorSelector col" role="button" data-bs-toggle="button"
                         aria-pressed="false">Immigrant</div>
-                    <input id="defaultColor" class="btn btn-primary col" type="reset" value="Default Color">
+                    <div id="impassable" class="btn btn-primary colorSelector col" role="button" data-bs-toggle="button"
+                    aria-pressed="false">Impassable</div>
                 </div>
-                <div class="row justify-content-start">
+                <div class="row justify-content-start mt-2">
                     <input type="color" class="form-control form-control-color col" id="userColor1Input" value="#8f916b"
                         title="Choose your color">
-                    <input type="color" class="form-control form-control-color col" id="userColor2Input" value="#443D25"
+                    <input type="color" class="form-control form-control-color col" id="userColor2Input" value="#DBC4AF"
                         title="Choose your color">
-                    <div class="col"> </div>
+                    <input id="defaultColor" class="btn btn-primary col" type="reset" value="Default Color">
                 </div>
                 <div class="col controlPanelText text-tan">Frame Rate Adjustment</div>
                 <div class=""><input type="range" class="form-range" min="1" max="200" step="1" id="frameRateRange">
@@ -142,20 +143,20 @@
                   </select> -->
                   <div id="areaFilled" class="col-12">
                     <div class="form-check">
-                        <input class="form-check-input fillMyHole" type="radio" name="flexRadioDefault" id="fillOne"
+                        <input class="form-check-input fillMyHole" type="radio" name="flexRadio" id="fillOne"
                             checked="null">
                         <label class="form-check-label" for="fillOne">
                             1 boxes
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input fillMyHole" type="radio" name="flexRadioDefault" id="fillTwo">
+                        <input class="form-check-input fillMyHole" type="radio" name="flexRadio" id="fillTwo">
                         <label class="form-check-label" for="fillTwo">
                             9 boxes
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input fillMyHole" type="radio" name="flexRadioDefault" id="fillThree">
+                        <input class="form-check-input fillMyHole" type="radio" name="flexRadio" id="fillThree">
                         <label class="form-check-label" for="fillThree">
                             25 boxes
                         </label>

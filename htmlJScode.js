@@ -21,7 +21,7 @@
 // only if I have time
 // hover change color [doable] (opaciity) 
 // change size of mouse press [doable] (mouse drag set change value range to +value - value of x & y) [done]
-// impassable terrain (check impassable value at both generate and mouse drag. )
+// impassable terrain (check impassable value at both generate and mouse drag. ) [done]
 
 
 const unitLength = 20;
@@ -40,7 +40,7 @@ let lonely = 2
 let overpopulation = 3
 let reproduction = 3
 let userColor1 = '#8f916b'
-let userColor2 = '#443D25'
+let userColor2 = '#DBC4AF'
 let controlPanel = document.querySelector('#controlPanel')
 let currentColor = 1;
 
@@ -64,19 +64,19 @@ function init() {
         case "gliderGameMode":
             normalInit()
             gliderInit(); break;
-        case "spaceshipGameMode": 
-        normalInit()
-        spaceshipInit(); break;
-        case "GGG": 
-        normalInit()
-        GGG();break;
+        case "spaceshipGameMode":
+            normalInit()
+            spaceshipInit(); break;
+        case "GGG":
+            normalInit()
+            GGG(); break;
     }
 
     function normalInit() {
         for (let i = 0; i < columns; i++) {
             for (let j = 0; j < rows; j++) {
-                currentBoard[i][j] = { value: 0, version: 0, stable: 0 };
-                nextBoard[i][j] = { value: 0, version: 0, stable: 0 };
+                currentBoard[i][j] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 };
+                nextBoard[i][j] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 };
             }
         }
     }
@@ -84,8 +84,8 @@ function init() {
     function randomInit() {
         for (let i = 0; i < columns; i++) {
             for (let j = 0; j < rows; j++) {
-                currentBoard[i][j] = { value: (floor(Math.random() * 2)), version: 1, stable: 0 };
-                nextBoard[i][j] = { value: 0, version: 0, stable: 0 };
+                currentBoard[i][j] = { value: (floor(Math.random() * 2)), version: 1, stable: 0, impassable: false, specialValue: 0 };
+                nextBoard[i][j] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 };
             }
         }
     }
@@ -93,27 +93,27 @@ function init() {
     function beaconInit() {
         let template = [[0, 0], [0, 1], [1, 0], [2, 3], [3, 2], [3, 3]]
         for (let unit of template) {
-            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0 };
+            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 };
         }
     }
 
     function gliderInit() {
         let template = [[0, 0], [1, -2], [1, 0], [2, -1], [2, 0]]
         for (let unit of template) {
-            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0 };
+            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 };
         }
     }
     function spaceshipInit() {
-        let template = [[0, 0], [1, -2], [1, 2], [2, 3], [3, -2], [3, 3], [4, -1],[4, 0], [4, 1], [4, 2],[4, 3]]
+        let template = [[0, 0], [1, -2], [1, 2], [2, 3], [3, -2], [3, 3], [4, -1], [4, 0], [4, 1], [4, 2], [4, 3]]
         for (let unit of template) {
-            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0 };
+            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 };
         }
     }
     function GGG() {
-        let template = [[0, 11],[1,9],[1,11],[2,-1],[2,0],[2,7],[2,8],[2,21],[2,22],[3,-2],[3,2],[3,7],[3,8],[3,21],[3,22],
-    [4,-12],[4,-13],[4,-3],[4,3],[4,7],[4,8],[5,-12],[5,-13],[5,-3],[5,1],[5,3],[5,4],[5,9],[5,11],[6,-3],[6,3],[6,11],[7,-2],[7,2],[8,-1],[8,0]]
+        let template = [[0, 11], [1, 9], [1, 11], [2, -1], [2, 0], [2, 7], [2, 8], [2, 21], [2, 22], [3, -2], [3, 2], [3, 7], [3, 8], [3, 21], [3, 22],
+        [4, -12], [4, -13], [4, -3], [4, 3], [4, 7], [4, 8], [5, -12], [5, -13], [5, -3], [5, 1], [5, 3], [5, 4], [5, 9], [5, 11], [6, -3], [6, 3], [6, 11], [7, -2], [7, 2], [8, -1], [8, 0]]
         for (let unit of template) {
-            currentBoard[midpointY + unit[0]][midpointX - 5 + unit[1]] = { value: 1, version: 1, stable: 0 };
+            currentBoard[midpointY + unit[0]][midpointX - 5 + unit[1]] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 };
         }
     }
 }
@@ -141,10 +141,7 @@ function setup() {
     init();  // Set the initial values of the currentBoard and nextBoard
 }
 
-
-
 // draw() this will run many times. run once per frame.
-// if frame rate is 30, draw() will run 30 times per second.
 function draw() {
 
     // checks framerate and executes
@@ -157,13 +154,12 @@ function draw() {
     if (document.querySelector('[id=pauseBtn][aria-pressed*="false"]')) {
         generate()
         count++
-    } else {
     }
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
             let e = currentBoard[i][j].version
             changeColor(e)
-            if (currentBoard[i][j].value == 1) {
+            if (currentBoard[i][j].value == 1 || currentBoard[i][j].specialValue == 1) {
                 fill(color(boxColor));
             } else {
                 fill(color(backgroundColor));
@@ -193,6 +189,8 @@ function generate() {
                     // The modulo operator is crucial for wrapping on the edge
                     neighbors += currentBoard[(x + i + columns) % columns][(y + j + rows) % rows].value;
                     switch (currentBoard[(x + i + columns) % columns][(y + j + rows) % rows].version) {
+                        case "i": ;
+                            break;
                         case "s":
                         case 1: natives += 1;
                             break;
@@ -203,13 +201,15 @@ function generate() {
             }
 
             // Rules of Life
-            if (currentBoard[x][y].value == 1) {
+            if (currentBoard[x][y].impassable == true) {
+                nextBoard[x][y] = { value: 0, version: "i", stable: 0, impassable: true, specialValue: 1 };
+            } else if (currentBoard[x][y].value == 1) {
                 if (neighbors < lonely) {
                     // Die of Loneliness
-                    nextBoard[x][y] = { value: 0, version: 0, stable: 0 };
+                    nextBoard[x][y] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 };
                 } else if (neighbors > overpopulation) {
                     // Die of Overpopulation
-                    nextBoard[x][y] = { value: 0, version: 0, stable: 0 }
+                    nextBoard[x][y] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 }
                 } else if (currentBoard[x][y].stable == 0) {
                     nextBoard[x][y] = currentBoard[x][y];
                     nextBoard[x][y].stable = 1
@@ -219,8 +219,8 @@ function generate() {
             } else if (currentBoard[x][y].value == 0 && neighbors == reproduction) {
                 // New life due to Reproduction
                 if (natives >= immigrants) {
-                    nextBoard[x][y] = { value: 1, version: 1, stable: 0 }
-                } else { nextBoard[x][y] = { value: 1, version: 2, stable: 0 } }
+                    nextBoard[x][y] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 }
+                } else { nextBoard[x][y] = { value: 1, version: 2, stable: 0, impassable: false, specialValue: 0 } }
                 nextBoard[x][y].value = 1;
             } else {
                 // Stasis
@@ -233,14 +233,7 @@ function generate() {
     [currentBoard, nextBoard] = [nextBoard, currentBoard];
 }
 
-
-/**
- * When mouse is dragged
- */
 function mouseDragged() {
-    /**
-    * If the mouse coordinate is outside the board
-    */
     if (mouseX > unitLength * columns || mouseY > unitLength * rows) {
         return;
     }
@@ -249,25 +242,21 @@ function mouseDragged() {
     let e = currentBoard[x][y].version;
     if (mouseButton === LEFT) {
         let area = areaFilled(document.querySelector('.fillMyHole[checked="null"]').getAttribute('id'))
-        for(let wide of area){
-            for(let high of area){
-                currentBoard[x+wide][y+high].value = 1;
+        for (let wide of area) {
+            for (let high of area) {
+                if (currentColor == "i") {
+                    currentBoard[x + wide][y + high].specialValue = 1
+                    currentBoard[x + wide][y + high].impassable = true
+                } else { currentBoard[x + wide][y + high].value = 1; }
                 changeColor(e)
-                currentBoard[x+wide][y+high].version = currentColor
+                currentBoard[x + wide][y + high].version = currentColor
                 fill(color(boxColor));
                 stroke(color(strokeColor));
                 rect(x * unitLength, y * unitLength, unitLength, unitLength);
             }
-        
         }
-        // currentBoard[x][y].value = 1;
-        // changeColor(e)
-        // currentBoard[x][y].version = currentColor
-        // fill(color(boxColor));
-        // stroke(color(strokeColor));
-        // rect(x * unitLength, y * unitLength, unitLength, unitLength);
     } else if (mouseButton === CENTER) {
-        currentBoard[x][y] = { value: 0, version: 0, stable: 0 }
+        currentBoard[x][y] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 }
         fill(color(backgroundColor));
         stroke(color(strokeColor));
         rect(x * unitLength, y * unitLength, unitLength, unitLength);
@@ -289,11 +278,6 @@ function mouseReleased() {
     loop();
 }
 
-// document.querySelector('#reset-game')
-//     .addEventListener('click', function () {
-//         init();
-//     });
-
 function buttonToggle(select) {
     let toggling = document.querySelectorAll('.colorSelector')
     for (let buttons of toggling) {
@@ -304,9 +288,6 @@ function buttonToggle(select) {
     document.querySelector(select).setAttribute('aria-pressed', 'true')
 }
 
-
-
-
 controlPanel.addEventListener('click', function (event) {
     if (event.target.matches('#reset-game')) {
         init()
@@ -316,23 +297,27 @@ controlPanel.addEventListener('click', function (event) {
     } else if (event.target.matches('#userColor2')) {
         buttonToggle('#userColor2')
         currentColor = 2
+    } else if (event.target.matches('#impassable')) {
+        buttonToggle('#impassable')
+        currentColor = "i"
     } else if (event.target.matches('#frameRateRange')) {
         document.querySelector('#userFrameRate').innerHTML = document.querySelector('#frameRateRange').value
     } else if (event.target.matches('#defaultColor')) {
         userColor1 = "#8f916b"
-        userColor2 = "#443D25"
+        userColor2 = "#DBC4AF"
         document.querySelector('#userColor1Input').value = userColor1
         document.querySelector('#userColor2Input').value = userColor2
     } else if (event.target.matches('[class*=whatAGame]')) {
         changeGameMode(event.target)
-    } else if (event.target.matches('[class*=fillMyHole]')){
+    } else if (event.target.matches('[class*=fillMyHole]')) {
         changeFilledHoles(event.target)
     }
 })
 
-
-function changeColor(e) {
-    switch (e) {
+function changeColor(color) {
+    switch (color) {
+        case "i": boxColor = "#000000";
+            break;
         case "s": boxColor = stableLifeColor;
             break;
         case 1: boxColor = userColor1;
@@ -342,33 +327,24 @@ function changeColor(e) {
     }
 }
 
-
-function changeGameMode(e) {
-    for(let stuff of document.querySelectorAll('.whatAGame')){
+function changeGameMode(game) {
+    for (let stuff of document.querySelectorAll('.whatAGame')) {
         stuff.removeAttribute('checked')
     }
-    e.setAttribute('checked',null)
-    }
-
-function changeFilledHoles(e) {
-    for(let stuff of document.querySelectorAll('.fillMyHole')){
-        stuff.removeAttribute('checked')
-    }
-    e.setAttribute('checked',null)
-    }
-
-
-function areaFilled(num){
-    switch(num){
-        case "fillOne": return [0];
-        case "fillTwo": return [-1,0,1];
-        case "fillThree": return [-2,-1,0,1,2];
-    }
+    game.setAttribute('checked', null)
 }
 
+function changeFilledHoles(e) {
+    for (let stuff of document.querySelectorAll('.fillMyHole')) {
+        stuff.removeAttribute('checked')
+    }
+    e.setAttribute('checked', null)
+}
 
-
-
-
-
-
+function areaFilled(num) {
+    switch (num) {
+        case "fillOne": return [0];
+        case "fillTwo": return [-1, 0, 1];
+        case "fillThree": return [-2, -1, 0, 1, 2];
+    }
+}
