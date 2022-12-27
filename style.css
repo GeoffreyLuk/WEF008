@@ -120,7 +120,17 @@ body{
 #controlPanel{
 
 }
-
+#controlPanelDiv{
+border: 3px solid #A45C40;
+/* margin: 5px; */
+padding: 25px;
+}
+#controlPanelDivLeft{
+    
+}
+#controlPanelDivRight{
+    
+}
 #userColor1{
 
 }

@@ -17,10 +17,14 @@
         <div class="container align-items-center justify-content-center">
             <div class="d-flex flex-wrap align-items-center justify-content-center">
                 <ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="GeoffreyLukProject1_intro.html #divider1" class="nav-link px-2 h1 text-tan">About Me</a></li>
-                    <li><a href="GeoffreyLukProject1_intro.html #divider2" class="nav-link px-2 h1 text-tan">Where was I?</a></li>
-                    <li><a href="GeoffreyLukProject1_intro.html #divider3" class="nav-link px-2 h1 text-tan">Anything Interesting?</a></li>
-                    <li><a href="GeoffreyLukProject1_intro.html #divider4" class="nav-link px-2 h1 text-tan">Why Coding</a></li>
+                    <li><a href="GeoffreyLukProject1_intro.html #divider1" class="nav-link px-2 h1 text-tan">About
+                            Me</a></li>
+                    <li><a href="GeoffreyLukProject1_intro.html #divider2" class="nav-link px-2 h1 text-tan">Where was
+                            I?</a></li>
+                    <li><a href="GeoffreyLukProject1_intro.html #divider3" class="nav-link px-2 h1 text-tan">Anything
+                            Interesting?</a></li>
+                    <li><a href="GeoffreyLukProject1_intro.html #divider4" class="nav-link px-2 h1 text-tan">Why
+                            Coding</a></li>
                     <li><a href="#canvas" class="nav-link px-2 h1 text-sage">Game</a></li>
 
                 </ul>
@@ -30,7 +34,7 @@
 
 
     <div class="container-lg">
-        <!-- Header quote (edit) needs to be bigger-->
+        <!-- Header quote -->
         <div class="container-lg my-5 text-center">
             <h1 class="display-1 p-1 quotesMain">
                 Geoffrey's Game of Life
@@ -54,42 +58,103 @@
     </div>
 
     <div id="controlPanel" class="container-md">
-        <input id="reset-game" class="btn btn-primary" type="reset" value="Reset">
-        <div id="pauseBtn" class="btn btn-primary active" role="button" data-bs-toggle="button" aria-pressed="true">
-            pause button</div>
-        <div class="row justify-content-start">
-            <div class="col-4">Current iteration count: </div>
-            <div id="iterationCount" class="col-2"></div>
-        </div>
-        <div class="row justify-content-start">
-            <div id="userColor1" class="btn btn-primary active col-2 colorSelector" role="button" data-bs-toggle="button"
-                aria-pressed="true">Color1</div>
-            <div id="userColor2" class="btn btn-primary col-2 colorSelector" role="button" data-bs-toggle="button"
-                aria-pressed="false">Color2</div>
-        </div>
-        <div class="row justify-content-start">
-            <div class="col-4"><input type="range" class="form-range" min="1" max="200" step="1" id="frameRateRange"></div>
-            <div class="row justify-content-start">
-                <div class="col-2">Frame Rate:</div>
-                <div id="userFrameRate" class="col-2">101</div>
+        <div id="controlPanelDiv" class="row">
+            <div id="controlPanelDivLeft" class="col-6">
+                <div class="row justify-content-start">
+                    <div class="col">Current iteration: </div>
+                    <div id="iterationCount" class="col"></div>
+                </div>
+                <input id="reset-game" class="btn btn-primary" type="reset" value="Reset">
+                <div id="pauseBtn" class="btn btn-primary active" role="button" data-bs-toggle="button"
+                    aria-pressed="true">
+                    pause button</div>
+            
+                <div id="gameMode" class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="defaultGameMode" checked="null">
+                        <label class="form-check-label" for="defaultGameMode">
+                          Default start
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="randomGameMode" >
+                        <label class="form-check-label" for="randomGameMode">
+                          Random start
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="beaconGameMode" >
+                        <label class="form-check-label" for="beaconGameMode">
+                          Beacon start
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="gliderGameMode">
+                        <label class="form-check-label" for="gliderGameMode">
+                          Glider start
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="spaceshipGameMode">
+                        <label class="form-check-label" for="spaceshipGameMode">
+                          Spaceship start
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="GGG">
+                        <label class="form-check-label" for="GGG">
+                          Gosper Glider Gun
+                        </label>
+                      </div>
+                    </div>
+                </div>
+
+            <div id="controlPanelDivRight" class="col-6">
+                <div class="row justify-content-start">
+                    <div id="userColor1" class="btn btn-primary active colorSelector col" role="button"
+                        data-bs-toggle="button" aria-pressed="true">Native</div>
+                    <div id="userColor2" class="btn btn-primary colorSelector col" role="button" data-bs-toggle="button"
+                        aria-pressed="false">Immigrant</div>
+                    <input id="defaultColor" class="btn btn-primary col" type="reset" value="Default Color">
+                </div>
+                <div class="row justify-content-start">
+                    <input type="color" class="form-control form-control-color col" id="userColor1Input" value="#8f916b"
+                        title="Choose your color">
+                    <input type="color" class="form-control form-control-color col" id="userColor2Input" value="#443D25"
+                        title="Choose your color">
+                    <div class="col"> </div>
+                </div>
+                <div class=""><input type="range" class="form-range" min="1" max="200" step="1" id="frameRateRange">
+                </div>
+                <div class="row justify-content-start">
+                    <div class="col">Frame Rate:</div>
+                    <div id="userFrameRate" class="col">101</div>
+                </div>
             </div>
         </div>
     </div>
 
+
+    <!-- footer -->
+
     <div class="container-flex bg-tan">
         <footer class="py-3 my-4">
-          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider1" class="nav-link px-2 text-muted text-cream">About Me</a></li>
-            <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider2" class="nav-link px-2 text-muted text-cream">Where was I?</a></li>
-            <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider3" class="nav-link px-2 text-muted text-cream">Anything Interesting?</a></li>
-            <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider4" class="nav-link px-2 text-muted text-cream">Why Coding</a></li>
-            <li class="nav-item"><a href="#canvas" class="nav-link px-2 text-muted text-cream">Game</a></li>
-          </ul>
-          <p class="text-center text-muted text-cream">Open for recruitment!</p>
-          <p class="text-center text-muted text-cream">Mobile: 12345678</p>
-          <p class="text-center text-muted text-cream">Email: Random.email@gmail.com</p>
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider1"
+                        class="nav-link px-2 text-muted text-cream">About Me</a></li>
+                <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider2"
+                        class="nav-link px-2 text-muted text-cream">Where was I?</a></li>
+                <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider3"
+                        class="nav-link px-2 text-muted text-cream">Anything Interesting?</a></li>
+                <li class="nav-item"><a href="GeoffreyLukProject1_intro.html #divider4"
+                        class="nav-link px-2 text-muted text-cream">Why Coding</a></li>
+                <li class="nav-item"><a href="#canvas" class="nav-link px-2 text-muted text-cream">Game</a></li>
+            </ul>
+            <p class="text-center text-muted text-cream">Open for recruitment!</p>
+            <p class="text-center text-muted text-cream">Mobile: 12345678</p>
+            <p class="text-center text-muted text-cream">Email: Random.email@gmail.com</p>
         </footer>
-      </div>
+    </div>
 
 
 

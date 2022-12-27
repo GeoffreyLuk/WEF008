@@ -11,11 +11,11 @@
 // Start/Stop the Game of life [accomplished] [done]
 // Multiple colors of life on the same board. [accomplished] [done]
 // Darken colors for stable life. [doable] [done]
-// Random initial states [doable]
-// Well-known patterns of Game of Life to select from (Examples: Gosper Glider Gun, Glider, Lightweight train). [doable]
+// Random initial states [doable] [done]
+// Well-known patterns of Game of Life to select from (Examples: Gosper Glider Gun, Glider, Lightweight train). [doable] [done]
 // Use Keyboard to control the cursor to place the life [forgo]
 // Resize board on windows resize (Check out windowsResized) [done]
-// Switching between different styles. [accomplished]
+// Switching between different styles. [accomplished] [done]
 // show iteration version [doable] add count at generate [done]
 // Anything else that you could think of.
 // only if I have time
@@ -40,7 +40,7 @@ let lonely = 2
 let overpopulation = 3
 let reproduction = 3
 let userColor1 = '#8f916b'
-let userColor2 = '#c61a09'
+let userColor2 = '#443D25'
 let controlPanel = document.querySelector('#controlPanel')
 let currentColor = 1;
 
@@ -51,10 +51,70 @@ function init() {
     document.querySelector('[id=pauseBtn]').setAttribute('aria-pressed', 'true')
     document.querySelector('[id=pauseBtn]').setAttribute('class', 'btn btn-primary active')
     count = 0
-    for (let i = 0; i < columns; i++) {
-        for (let j = 0; j < rows; j++) {
-            currentBoard[i][j] = { value: 0, version: 0, stable: 0 };
-            nextBoard[i][j] = { value: 0, version: 0, stable: 0 };
+    let midpointX = floor(rows / 2)
+    let midpointY = floor(columns / 2)
+
+    let modes = "GGG"
+    //different game modes
+    switch (document.querySelector('[checked]').getAttribute('id')) {
+        case "defaultGameMode": normalInit(); break;
+        case "randomGameMode": randomInit(); break;
+        case "beaconGameMode":
+            normalInit()
+            beaconInit(); break;
+        case "gliderGameMode":
+            normalInit()
+            gliderInit(); break;
+        case "spaceshipGameMode": 
+        normalInit()
+        spaceshipInit(); break;
+        case "GGG": 
+        normalInit()
+        GGG();break;
+    }
+
+    function normalInit() {
+        for (let i = 0; i < columns; i++) {
+            for (let j = 0; j < rows; j++) {
+                currentBoard[i][j] = { value: 0, version: 0, stable: 0 };
+                nextBoard[i][j] = { value: 0, version: 0, stable: 0 };
+            }
+        }
+    }
+
+    function randomInit() {
+        for (let i = 0; i < columns; i++) {
+            for (let j = 0; j < rows; j++) {
+                currentBoard[i][j] = { value: (floor(Math.random() * 2)), version: 1, stable: 0 };
+                nextBoard[i][j] = { value: 0, version: 0, stable: 0 };
+            }
+        }
+    }
+
+    function beaconInit() {
+        let template = [[0, 0], [0, 1], [1, 0], [2, 3], [3, 2], [3, 3]]
+        for (let unit of template) {
+            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0 };
+        }
+    }
+
+    function gliderInit() {
+        let template = [[0, 0], [1, -2], [1, 0], [2, -1], [2, 0]]
+        for (let unit of template) {
+            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0 };
+        }
+    }
+    function spaceshipInit() {
+        let template = [[0, 0], [1, -2], [1, 2], [2, 3], [3, -2], [3, 3], [4, -1],[4, 0], [4, 1], [4, 2],[4, 3]]
+        for (let unit of template) {
+            currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0 };
+        }
+    }
+    function GGG() {
+        let template = [[0, 11],[1,9],[1,11],[2,-1],[2,0],[2,7],[2,8],[2,21],[2,22],[3,-2],[3,2],[3,7],[3,8],[3,21],[3,22],
+    [4,-12],[4,-13],[4,-3],[4,3],[4,7],[4,8],[5,-12],[5,-13],[5,-3],[5,1],[5,3],[5,4],[5,9],[5,11],[6,-3],[6,3],[6,11],[7,-2],[7,2],[8,-1],[8,0]]
+        for (let unit of template) {
+            currentBoard[midpointY + unit[0]][midpointX - 5 + unit[1]] = { value: 1, version: 1, stable: 0 };
         }
     }
 }
@@ -87,10 +147,12 @@ function setup() {
 // draw() this will run many times. run once per frame.
 // if frame rate is 30, draw() will run 30 times per second.
 function draw() {
-    
+
     // checks framerate and executes
     frameRate(parseInt(document.querySelector('#userFrameRate').innerHTML))
     background(color(backgroundColor));
+    userColor1 = document.querySelector('#userColor1Input').value
+    userColor2 = document.querySelector('#userColor2Input').value
 
     //pause game on active button
     if (document.querySelector('[id=pauseBtn][aria-pressed*="false"]')) {
@@ -186,14 +248,14 @@ function mouseDragged() {
     const x = Math.floor(mouseX / unitLength);
     const y = Math.floor(mouseY / unitLength);
     let e = currentBoard[x][y].version;
-    if (mouseButton === LEFT){
-    currentBoard[x][y].value = 1;
-    changeColor(e)
-    currentBoard[x][y].version = currentColor
-    fill(color(boxColor));
-    stroke(color(strokeColor));
-    rect(x * unitLength, y * unitLength, unitLength, unitLength);
-    }else if (mouseButton === CENTER){
+    if (mouseButton === LEFT) {
+        currentBoard[x][y].value = 1;
+        changeColor(e)
+        currentBoard[x][y].version = currentColor
+        fill(color(boxColor));
+        stroke(color(strokeColor));
+        rect(x * unitLength, y * unitLength, unitLength, unitLength);
+    } else if (mouseButton === CENTER) {
         currentBoard[x][y] = { value: 0, version: 0, stable: 0 }
         fill(color(backgroundColor));
         stroke(color(strokeColor));
@@ -224,10 +286,10 @@ function mouseReleased() {
 function buttonToggle(select) {
     let toggling = document.querySelectorAll('.colorSelector')
     for (let buttons of toggling) {
-        buttons.setAttribute('class', 'btn btn-primary col-2 colorSelector')
+        buttons.setAttribute('class', 'btn btn-primary col colorSelector')
         buttons.setAttribute('aria-pressed', 'false')
     }
-    document.querySelector(select).setAttribute('class', 'btn btn-primary col-2 colorSelector active')
+    document.querySelector(select).setAttribute('class', 'btn btn-primary col colorSelector active')
     document.querySelector(select).setAttribute('aria-pressed', 'true')
 }
 
@@ -243,8 +305,16 @@ controlPanel.addEventListener('click', function (event) {
     } else if (event.target.matches('#userColor2')) {
         buttonToggle('#userColor2')
         currentColor = 2
-    }else if (event.target.matches('#frameRateRange')){
+    } else if (event.target.matches('#frameRateRange')) {
         document.querySelector('#userFrameRate').innerHTML = document.querySelector('#frameRateRange').value
+    } else if (event.target.matches('#defaultColor')) {
+        userColor1 = "#8f916b"
+        userColor2 = "#443D25"
+        document.querySelector('#userColor1Input').value = userColor1
+        document.querySelector('#userColor2Input').value = userColor2
+    } else if (event.target.matches('[class*=form-check-input]')) {
+        let test2 = event.target
+        changeGameMode(test2)
     }
 })
 
@@ -259,4 +329,22 @@ function changeColor(e) {
             break;
     }
 }
+
+
+function changeGameMode(e) {
+    for(let stuff of document.querySelectorAll('.form-check-input')){
+        stuff.removeAttribute('checked')
+    }
+    e.setAttribute('checked',null)
+    }
+   
+
+
+
+
+
+
+
+
+
 
