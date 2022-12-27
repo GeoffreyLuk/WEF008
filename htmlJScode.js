@@ -20,7 +20,7 @@
 // Anything else that you could think of.
 // only if I have time
 // hover change color [doable] (opaciity) 
-// change size of mouse press [doable] (mouse drag set change value range to +value - value of x & y)
+// change size of mouse press [doable] (mouse drag set change value range to +value - value of x & y) [done]
 // impassable terrain (check impassable value at both generate and mouse drag. )
 
 
@@ -54,9 +54,8 @@ function init() {
     let midpointX = floor(rows / 2)
     let midpointY = floor(columns / 2)
 
-    let modes = "GGG"
     //different game modes
-    switch (document.querySelector('[checked]').getAttribute('id')) {
+    switch (document.querySelector('.whatAGame[checked="null"]').getAttribute('id')) {
         case "defaultGameMode": normalInit(); break;
         case "randomGameMode": randomInit(); break;
         case "beaconGameMode":
@@ -249,12 +248,24 @@ function mouseDragged() {
     const y = Math.floor(mouseY / unitLength);
     let e = currentBoard[x][y].version;
     if (mouseButton === LEFT) {
-        currentBoard[x][y].value = 1;
-        changeColor(e)
-        currentBoard[x][y].version = currentColor
-        fill(color(boxColor));
-        stroke(color(strokeColor));
-        rect(x * unitLength, y * unitLength, unitLength, unitLength);
+        let area = areaFilled(document.querySelector('.fillMyHole[checked="null"]').getAttribute('id'))
+        for(let wide of area){
+            for(let high of area){
+                currentBoard[x+wide][y+high].value = 1;
+                changeColor(e)
+                currentBoard[x+wide][y+high].version = currentColor
+                fill(color(boxColor));
+                stroke(color(strokeColor));
+                rect(x * unitLength, y * unitLength, unitLength, unitLength);
+            }
+        
+        }
+        // currentBoard[x][y].value = 1;
+        // changeColor(e)
+        // currentBoard[x][y].version = currentColor
+        // fill(color(boxColor));
+        // stroke(color(strokeColor));
+        // rect(x * unitLength, y * unitLength, unitLength, unitLength);
     } else if (mouseButton === CENTER) {
         currentBoard[x][y] = { value: 0, version: 0, stable: 0 }
         fill(color(backgroundColor));
@@ -312,9 +323,10 @@ controlPanel.addEventListener('click', function (event) {
         userColor2 = "#443D25"
         document.querySelector('#userColor1Input').value = userColor1
         document.querySelector('#userColor2Input').value = userColor2
-    } else if (event.target.matches('[class*=form-check-input]')) {
-        let test2 = event.target
-        changeGameMode(test2)
+    } else if (event.target.matches('[class*=whatAGame]')) {
+        changeGameMode(event.target)
+    } else if (event.target.matches('[class*=fillMyHole]')){
+        changeFilledHoles(event.target)
     }
 })
 
@@ -332,15 +344,27 @@ function changeColor(e) {
 
 
 function changeGameMode(e) {
-    for(let stuff of document.querySelectorAll('.form-check-input')){
+    for(let stuff of document.querySelectorAll('.whatAGame')){
         stuff.removeAttribute('checked')
     }
     e.setAttribute('checked',null)
     }
-   
+
+function changeFilledHoles(e) {
+    for(let stuff of document.querySelectorAll('.fillMyHole')){
+        stuff.removeAttribute('checked')
+    }
+    e.setAttribute('checked',null)
+    }
 
 
-
+function areaFilled(num){
+    switch(num){
+        case "fillOne": return [0];
+        case "fillTwo": return [-1,0,1];
+        case "fillThree": return [-2,-1,0,1,2];
+    }
+}
 
 
 

@@ -171,3 +171,8 @@ padding: 25px;
     background-color: #a45c40;
     color: #F6EEE0;
 }
+.controlPanelText{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
