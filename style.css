@@ -53,6 +53,9 @@
 body{
     background-color: #F6EEE0;
 }
+.border-dark{
+    border-color: #A45C40 !important;
+}
 .boxTest{
     height: 5rem;
     aspect-ratio: 1/1;
@@ -104,7 +107,7 @@ body{
 #pauseBtn{
 
 }
-#pauseBtnIndicator{
+#valueIndicator{
 
 }
 #iterationCount{
@@ -124,5 +127,19 @@ body{
 }
 
 .colorSelector{
-    
+
+}
+
+#gameMode{
+
+}
+.hidden{
+    opacity: 0;
+    transition: all 1s;
+    transform: translateY(100px);
+}
+
+.show{
+    opacity: 1;
+    transform: translateY(0px)
 }

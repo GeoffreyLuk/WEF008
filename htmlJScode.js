@@ -87,18 +87,16 @@ function setup() {
 // draw() this will run many times. run once per frame.
 // if frame rate is 30, draw() will run 30 times per second.
 function draw() {
-
+    
     // checks framerate and executes
     frameRate(parseInt(document.querySelector('#userFrameRate').innerHTML))
     background(color(backgroundColor));
 
     //pause game on active button
     if (document.querySelector('[id=pauseBtn][aria-pressed*="false"]')) {
-        document.querySelector('#pauseBtnIndicator').innerHTML = "running"
         generate()
         count++
     } else {
-        document.querySelector('#pauseBtnIndicator').innerHTML = "Paused"
     }
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
@@ -188,12 +186,19 @@ function mouseDragged() {
     const x = Math.floor(mouseX / unitLength);
     const y = Math.floor(mouseY / unitLength);
     let e = currentBoard[x][y].version;
+    if (mouseButton === LEFT){
     currentBoard[x][y].value = 1;
     changeColor(e)
     currentBoard[x][y].version = currentColor
     fill(color(boxColor));
     stroke(color(strokeColor));
     rect(x * unitLength, y * unitLength, unitLength, unitLength);
+    }else if (mouseButton === CENTER){
+        currentBoard[x][y] = { value: 0, version: 0, stable: 0 }
+        fill(color(backgroundColor));
+        stroke(color(strokeColor));
+        rect(x * unitLength, y * unitLength, unitLength, unitLength);
+    }
 }
 
 /**
@@ -201,7 +206,7 @@ function mouseDragged() {
 */
 function mousePressed() {
     noLoop();
-    mouseDragged();
+    mouseDragged()
 }
 
 /**
@@ -238,6 +243,8 @@ controlPanel.addEventListener('click', function (event) {
     } else if (event.target.matches('#userColor2')) {
         buttonToggle('#userColor2')
         currentColor = 2
+    }else if (event.target.matches('#frameRateRange')){
+        document.querySelector('#userFrameRate').innerHTML = document.querySelector('#frameRateRange').value
     }
 })
 
@@ -252,3 +259,4 @@ function changeColor(e) {
             break;
     }
 }
+
