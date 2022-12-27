@@ -17,12 +17,11 @@
         <div class="container align-items-center justify-content-center">
             <div class="d-flex flex-wrap align-items-center justify-content-center">
                 <ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#section1"
-                            class="nav-link px-2 h1 text-tan">About Me</a></li>
-                    <li><a href="#section2"
-                            class="nav-link px-2 h1 text-tan">Section 2</a></li>
-                    <li><a href="GeoffreyLukProject1_game.html"
-                            class="nav-link px-2 h1 text-sage">Game</a></li>
+                    <li><a href="#divider1" class="nav-link px-2 h1 text-tan">About Me</a></li>
+                    <li><a href="#divider2" class="nav-link px-2 h1 text-tan">Where was I?</a></li>
+                    <li><a href="#divider3" class="nav-link px-2 h1 text-tan">Anything Interesting?</a></li>
+                    <li><a href="#divider4" class="nav-link px-2 h1 text-tan">Why Coding</a></li>
+                    <li><a href="GeoffreyLukProject1_game.html" class="nav-link px-2 h1 text-sage">Game</a></li>
 
                 </ul>
             </div>
@@ -44,50 +43,160 @@
             </h2>
         </div>
 
-        <div class="contentDivider mt-3"></div>
+        <div class="contentDivider my-3"></div>
+
+        <div id="carouselTrip" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselTrip" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Vienna"></button>
+                <button type="button" data-bs-target="#carouselTrip" data-bs-slide-to="1"
+                    aria-label="Netherlands"></button>
+                <button type="button" data-bs-target="#carouselTrip" data-bs-slide-to="2" aria-label="Spain"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="Assets\Vienna.JPG" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>My Recent Trip</h5>
+                        <p>Vienna</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="Assets\Netherlands.JPG" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>My Recent Trip</h5>
+                        <p>Netherlands</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="Assets\Spain.JPG" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>My Recent Trip</h5>
+                        <p>Spain</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="divider1" class="contentDivider"></div>
 
         <!-- first content -->
         <div id="section1" class="container-lg content justify-content-center hidden">
             <div class="row">
                 <div class="col-lg-4 col-md-12">
-                    <img src="Assets\stockImage.jpg" class="img-fluid" ;>
+                    <img src="Assets\Personal Pic.jpg" class="img-fluid rounded-circle shadow" ;>
                 </div>
                 <div class="contentProp col-lg-1 col-md-12"> </div>
                 <div class="col-lg-7 col-md-12">
-                    <p class="contentTopic text-tan">Topic</p>
-                    <p class="contentParagraph text-beige">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                        reprehenderit aut fuga numquam earum! Molestias exercitationem sequi porro laborum. Voluptatum
-                        asperiores corrupti delectus nam. Unde distinctio cum aliquam quo magnam?</p>
+                    <p class="contentTopic text-tan">About me</p>
+                    <p class="contentParagraph text-beige">Hi! My name is Geoffrey. A 25-year-old coding wannabe.
+                        I'm from Canada but mostly grew up in Hong Kong. Despite living here practically my entire life,
+                        my Chinese is really bad. Please give me time to explain myself if you don't understand what I'm
+                        saying.</p>
                 </div>
             </div>
         </div>
 
-        <div class="contentDivider"></div>
+        <div id="divider2" class="contentDivider"></div>
 
         <!-- second content -->
         <div id="section2" class="container-lg content justify-content-center hidden">
             <div class="row">
-                <div class="col-lg-7 col-md-12 order-md-3">
-                    <p class="contentTopic text-tan text-end">Topic</p>
-                    <p class="contentParagraph text-beige text-end">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Modi
-                        reprehenderit aut fuga numquam earum! Molestias exercitationem sequi porro laborum. Voluptatum
-                        asperiores corrupti delectus nam. Unde distinctio cum aliquam quo magnam?</p>
+                <div class="col-lg-7 col-md-12">
+                    <p class="contentTopic text-tan text-end">Where was I?</p>
+                    <p class="contentParagraph text-beige text-end">Before starting at Tecky Academy, I worked at HKUMed
+                        as a Student Engagement and Outreach Officer. My main portfolio was reaching out to secondary
+                        school kids and encouraging them to enter our school's medicine programme! We market through fun
+                        events and school visits. While this role builds on my interest in event management, it is time
+                        to move on...</p>
                 </div>
-                <div class="contentProp col-lg-1 col-md-12 order-md-2"> </div>
-                <div class="col-lg-4 col-md-12 order-md-1">
-                    <img src="Assets\stockImage.jpg" class="img-fluid" ;>
+                <div class="contentProp col-lg-1 col-md-12"> </div>
+                <div class="col-lg-4 col-md-12">
+                    <img src="Assets\HKU.JPG" class="img-fluid" ;>
                 </div>
             </div>
         </div>
 
-        <div class="contentDivider"></div>
+        <div id="divider3" class="contentDivider"></div>
+
+        <!-- third content -->
+        <div id="section3" class="container-lg content justify-content-center hidden">
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <img src="Assets\Scuba.JPG" class="img-fluid" ;>
+                </div>
+                <div class="contentProp col-lg-1 col-md-12"> </div>
+                <div class="col-lg-7 col-md-12">
+                    <p class="contentTopic text-tan">Anything interesting?</p>
+                    <p class="contentParagraph text-beige">Before we move on (pun intended), I hope I can make a few new friends here.
+                        So here are my interests:</p>
+                    &nbsp;
+                    <p class="contentParagraph text-tan">Adventures:</p>
+                    <p class="contentParagraph text-beige">Scuba diving, snowboarding, hiking</p>
+                    <p class="contentParagraph text-tan">Board Games:</p>
+                    <p class="contentParagraph text-beige">Avalon and most social deduction games</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="divider4" class="contentDivider"></div>
+
+        <!-- fourth content -->
+        <div id="section4" class="container-lg content justify-content-center hidden">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <p class="contentTopic text-tan text-end">Why coding?</p>
+                    <p class="contentParagraph text-beige text-end">We should all put in the effort to discover our
+                        interests and strengths. In my previous job, I got the opportunity to explore data management.
+                        While mainly in Excel, it got me interested in functions and coding. I thoroughly enjoy the
+                        problem-solving method of coding and hope to make a career out of it. Here I am now!</p>
+                </div>
+                <div class="contentProp col-lg-1 col-md-12"> </div>
+                <div class="col-lg-5 col-md-12">
+                    <h1 class="display-1 p-1 quotesMain">
+                        Life is Growth. You Grow, or You Die.
+                    </h1>
+                    <h2 class="p-1 quotesFollow">
+                        - Phil Knight
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="divider5" class="contentDivider"></div>
 
         <!-- Link to game -->
-        <div id="sectionGame" class="container-lg content justify-content-center hidden">
-            <a class="btn btn-primary btn-lg" href="GeoffreyLukProject1_game.html" role="button">Click here for my
-                game</a>
+        <div id="sectionGame" class="container-lg endContent hidden">
+            <div class="col-12 justify-content-center text-center">
+                <h1 class="display-3 p-1 quotesMain">
+                    Without further ado
+                    <br>
+                    Here's my first coding project!
+                </h1>
+                <br>
+                <a id="Game" class="gameButton" href="GeoffreyLukProject1_game.html">Click here for Geoffrey's Game of Life</a>
+            </div>
+
         </div>
+    </div>
+
+    <div class="container-flex bg-tan">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-auto">
+                <li class="nav-item"><a href="#divider1" class="nav-link px-2 text-muted text-cream">About Me</a></li>
+                <li class="nav-item"><a href="#divider2" class="nav-link px-2 text-muted text-cream">Where was I?</a>
+                </li>
+                <li class="nav-item"><a href="#divider3" class="nav-link px-2 text-muted text-cream">Anything
+                        Interesting?</a></li>
+                <li class="nav-item"><a href="#divider4" class="nav-link px-2 text-muted text-cream">Why Coding</a></li>
+                <li class="nav-item"><a href="GeoffreyLukProject1_game.html"
+                        class="nav-link px-2 text-muted text-cream">Game</a></li>
+            </ul>
+            <p class="text-center text-muted text-cream">Open for recruitment!</p>
+            <p class="text-center text-muted text-cream">Mobile: 12345678</p>
+            <p class="text-center text-muted text-cream">Email: Random.email@gmail.com</p>
+        </footer>
     </div>
 
 

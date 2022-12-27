@@ -8,11 +8,9 @@ const observer = new IntersectionObserver(function(entries,observer){
     entries.forEach(entry => {
         // console.log(entry.target)
         if(entry.isIntersecting){
-            console.log(entry.target)
             entry.target.classList.add('show');
         }else{entry.target.classList.remove('show');}
     })
 },options)
 
 sections.forEach(section => {observer.observe(section)})
-

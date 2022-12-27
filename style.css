@@ -76,6 +76,9 @@ body{
 .content{
     margin: 0 5px 0 5px;
 }
+.endContent{
+    margin: 0 5px 200px 5px;
+}
 .contentTopic{
     font-size: 50px;
     margin: 0;
@@ -142,4 +145,19 @@ body{
 .show{
     opacity: 1;
     transform: translateY(0px)
+}
+.gameButton{
+    border: 3px solid #a45c40;
+    height: fit-content;
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5%;
+    color: #a45c40;
+    font-weight: bold;
+    font-size: 2rem;
+    margin: auto;
+}
+.gameButton:hover{
+    background-color: #a45c40;
+    color: #F6EEE0;
 }
