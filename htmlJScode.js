@@ -45,13 +45,13 @@ let controlPanel = document.querySelector('#controlPanel')
 let currentColor = 1;
 
 
-//Initialize/reset the board state
+//Initialize/reset the board state. Game mode query from radio. All box value must be set, must run normalInit / randomInit
 
-function init() {
+function init() { //init is only called during setup and reset.
     document.querySelector('[id=pauseBtn]').setAttribute('aria-pressed', 'true')
     document.querySelector('[id=pauseBtn]').setAttribute('class', 'btn btn-primary active')
-    count = 0
-    let midpointX = floor(rows / 2)
+    count = 0 // for when reset button is clicked
+    let midpointX = floor(rows / 2) //using midpoint to place game modes
     let midpointY = floor(columns / 2)
 
     //different game modes
@@ -80,7 +80,6 @@ function init() {
             }
         }
     }
-
     function randomInit() {
         for (let i = 0; i < columns; i++) {
             for (let j = 0; j < rows; j++) {
@@ -89,14 +88,12 @@ function init() {
             }
         }
     }
-
     function beaconInit() {
         let template = [[0, 0], [0, 1], [1, 0], [2, 3], [3, 2], [3, 3]]
         for (let unit of template) {
             currentBoard[midpointY + unit[0]][midpointX + unit[1]] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 };
         }
     }
-
     function gliderInit() {
         let template = [[0, 0], [1, -2], [1, 0], [2, -1], [2, 0]]
         for (let unit of template) {
@@ -122,7 +119,7 @@ function init() {
 // It will only run exactly once.
 function setup() {
 
-    /* Set the canvas to be under the element #canvas*/
+    // Set the canvas to be under the element #canvas canvas size dependent on div[#canvas] width - 20px to offset missing columns
     const canvas = createCanvas((gameWidth.offsetWidth - 20), displayHeight);
     canvas.parent(document.querySelector('#canvas'));
 
@@ -141,16 +138,16 @@ function setup() {
     init();  // Set the initial values of the currentBoard and nextBoard
 }
 
-// draw() this will run many times. run once per frame.
+// draw() this will run many times. The number of time it runs is based on framerate() Will use this to return values that must be constantly checked
 function draw() {
 
     // checks framerate and executes
     frameRate(parseInt(document.querySelector('#userFrameRate').innerHTML))
     background(color(backgroundColor));
-    userColor1 = document.querySelector('#userColor1Input').value
+    userColor1 = document.querySelector('#userColor1Input').value //changes mousepressed color
     userColor2 = document.querySelector('#userColor2Input').value
 
-    //pause game on active button
+    //pause game on active button, by preventing generate() currentboard !> nextboard. still allows mouse press
     if (document.querySelector('[id=pauseBtn][aria-pressed*="false"]')) {
         generate()
         count++
@@ -158,7 +155,7 @@ function draw() {
     for (let i = 0; i < columns; i++) {
         for (let j = 0; j < rows; j++) {
             let e = currentBoard[i][j].version
-            changeColor(e)
+            changeColor(e) //change color takes the version of each cell and changes boxColor to value
             if (currentBoard[i][j].value == 1 || currentBoard[i][j].specialValue == 1) {
                 fill(color(boxColor));
             } else {
@@ -189,9 +186,9 @@ function generate() {
                     // The modulo operator is crucial for wrapping on the edge
                     neighbors += currentBoard[(x + i + columns) % columns][(y + j + rows) % rows].value;
                     switch (currentBoard[(x + i + columns) % columns][(y + j + rows) % rows].version) {
-                        case "i": ;
+                        case "i": ; //impassables are not counted as neighbour since value == 0
                             break;
-                        case "s":
+                        case "s": // stasis have value == 1. counted even though they have different version as 1. Immigrants who have become stasis will become natives
                         case 1: natives += 1;
                             break;
                         case 2: immigrants += 1;
@@ -210,18 +207,19 @@ function generate() {
                 } else if (neighbors > overpopulation) {
                     // Die of Overpopulation
                     nextBoard[x][y] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 }
-                } else if (currentBoard[x][y].stable == 0) {
+                } else if (currentBoard[x][y].stable == 3) { //assign living cells who are alive after 3 cycles as stasis
                     nextBoard[x][y] = currentBoard[x][y];
-                    nextBoard[x][y].stable = 1
-                } else if (currentBoard[x][y].stable == 1) {
                     nextBoard[x][y].version = "s"
+                } else if (currentBoard[x][y]) { //normal filled box
+                    nextBoard[x][y] = currentBoard[x][y];
+                    nextBoard[x][y].stable ++
                 }
             } else if (currentBoard[x][y].value == 0 && neighbors == reproduction) {
                 // New life due to Reproduction
                 if (natives >= immigrants) {
                     nextBoard[x][y] = { value: 1, version: 1, stable: 0, impassable: false, specialValue: 0 }
                 } else { nextBoard[x][y] = { value: 1, version: 2, stable: 0, impassable: false, specialValue: 0 } }
-                nextBoard[x][y].value = 1;
+                // nextBoard[x][y].value = 1;
             } else {
                 // Stasis
                 nextBoard[x][y] = currentBoard[x][y];
@@ -233,7 +231,7 @@ function generate() {
     [currentBoard, nextBoard] = [nextBoard, currentBoard];
 }
 
-function mouseDragged() {
+function mouseDragged() { //did not use delete and add on same keybind as it will trigger draw too many times
     if (mouseX > unitLength * columns || mouseY > unitLength * rows) {
         return;
     }
@@ -244,7 +242,7 @@ function mouseDragged() {
         let area = areaFilled(document.querySelector('.fillMyHole[checked="null"]').getAttribute('id'))
         for (let wide of area) {
             for (let high of area) {
-                if (currentColor == "i") {
+                if (currentColor == "i") { //specialvalues when placing impassable guarantees it will not trigger neighbours and will be filled in draw
                     currentBoard[x + wide][y + high].specialValue = 1
                     currentBoard[x + wide][y + high].impassable = true
                 } else { currentBoard[x + wide][y + high].value = 1; }
@@ -255,7 +253,7 @@ function mouseDragged() {
                 rect(x * unitLength, y * unitLength, unitLength, unitLength);
             }
         }
-    } else if (mouseButton === CENTER) {
+    } else if (mouseButton === CENTER) { //deletes cells
         currentBoard[x][y] = { value: 0, version: 0, stable: 0, impassable: false, specialValue: 0 }
         fill(color(backgroundColor));
         stroke(color(strokeColor));
@@ -278,7 +276,7 @@ function mouseReleased() {
     loop();
 }
 
-function buttonToggle(select) {
+function buttonToggle(select) { //because I did not see class/attribute changing when I pressed normally. change all associated values to false, but activate selected button
     let toggling = document.querySelectorAll('.colorSelector')
     for (let buttons of toggling) {
         buttons.setAttribute('class', 'btn btn-primary col colorSelector')
@@ -288,7 +286,7 @@ function buttonToggle(select) {
     document.querySelector(select).setAttribute('aria-pressed', 'true')
 }
 
-controlPanel.addEventListener('click', function (event) {
+controlPanel.addEventListener('click', function (event) {//what happens when you click on control panel
     if (event.target.matches('#reset-game')) {
         init()
     } else if (event.target.matches('#userColor1')) {
@@ -314,7 +312,7 @@ controlPanel.addEventListener('click', function (event) {
     }
 })
 
-function changeColor(color) {
+function changeColor(color) { //changes color based on what is the version of the box. it can also be affected by colorSelector(user1 or user2)
     switch (color) {
         case "i": boxColor = "#000000";
             break;
@@ -327,21 +325,21 @@ function changeColor(color) {
     }
 }
 
-function changeGameMode(game) {
+function changeGameMode(game) {//same as button toggle
     for (let stuff of document.querySelectorAll('.whatAGame')) {
         stuff.removeAttribute('checked')
     }
     game.setAttribute('checked', null)
 }
 
-function changeFilledHoles(e) {
+function changeFilledHoles(e) {//same as button toggle
     for (let stuff of document.querySelectorAll('.fillMyHole')) {
         stuff.removeAttribute('checked')
     }
     e.setAttribute('checked', null)
 }
 
-function areaFilled(num) {
+function areaFilled(num) {//placed in mouse pressed. returns array to fill in boxes with for^2 loops
     switch (num) {
         case "fillOne": return [0];
         case "fillTwo": return [-1, 0, 1];
